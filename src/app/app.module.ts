@@ -7,6 +7,7 @@ import { NecklaceComponent } from './necklace/necklace.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,11 @@ import {MatButtonModule} from '@angular/material/button';
     BrowserAnimationsModule,
     MatToolbarModule,
     MatButtonModule,
+    HttpClientModule,
+    HttpClientXsrfModule.withOptions({
+     cookieName: 'csrftoken',
+     headerName: 'X-CSRFToken',
+   }),
   ],
   providers: [],
   bootstrap: [AppComponent]

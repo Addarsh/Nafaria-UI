@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'necklace-demo',
@@ -14,7 +15,8 @@ export class NecklaceComponent implements OnInit {
   height = "";
   webRTC = false;
 
-  constructor(private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private changeDetectorRef: ChangeDetectorRef,
+    private http: HttpClient) {
     this.width = "480";
     this.height = "640";
     this.webRTC = false;
@@ -48,5 +50,30 @@ export class NecklaceComponent implements OnInit {
 
   capture() {
     this.canvas.nativeElement.getContext("2d").drawImage(this.video.nativeElement, 0, 0, +this.width, +this.height);
+    this.uploadImage();
+  }
+
+  uploadImage() {
+    this.http.get("http://localhost:8000/demo/upload/", {responseType: 'text'}).subscribe(resp => {
+      const parser = new DOMParser();
+      const xmldoc = parser.parseFromString(resp, "text/xml");
+      const csrfToken = xmldoc.getElementsByTagName("input")[0].getAttribute("value");
+
+      const HTTP_OPTIONS = {
+        headers: new HttpHeaders({
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'X-CSRFToken': csrfToken,
+        })
+      };
+
+      this.http.post("http://localhost:8000/demo/upload/", this.canvas.nativeElement.toDataURL(), HTTP_OPTIONS)
+        .subscribe(resp => {
+          console.log("HTTP response: ", resp);
+        }, err => {
+          console.log("http error: ", err);
+      });
+    }, err => {
+      console.log("GET received error: ", err);
+    });
   }
 }
