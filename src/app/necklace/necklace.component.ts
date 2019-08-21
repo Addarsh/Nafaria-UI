@@ -63,12 +63,18 @@ export class NecklaceComponent implements OnInit {
         headers: new HttpHeaders({
           'Content-Type': 'application/x-www-form-urlencoded',
           'X-CSRFToken': csrfToken,
-        })
+        }),
+        responseType: 'blob' as 'blob',
       };
 
       this.http.post("http://localhost:8000/demo/upload/", this.canvas.nativeElement.toDataURL("image/png"), HTTP_OPTIONS)
-        .subscribe(resp => {
-          console.log("POST response: ", resp);
+        .subscribe(blob => {
+          var ctx = this.canvas.nativeElement.getContext("2d");
+          var img = new Image();
+          img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+          }
+          img.src = URL.createObjectURL(blob);
         }, err => {
           console.log("POST image error: ", err);
       });
