@@ -37,8 +37,8 @@ export class NecklaceComponent implements OnInit {
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
     private http: HttpClient) {
-    this.width = "480";
-    this.height = "640";
+    this.width = "1280";
+    this.height = "720";
     this.webRTC = false;
   }
 
@@ -69,11 +69,11 @@ export class NecklaceComponent implements OnInit {
   }
 
   capture() {
-    this.canvas.nativeElement.getContext("2d").drawImage(this.video.nativeElement, 0, 0, +this.width, +this.height);
-    this.uploadImage();
-  }
+    const tempCanvas = document.createElement('canvas');
+    tempCanvas.width = +this.width;
+    tempCanvas.height = +this.height;
+    tempCanvas.getContext("2d").drawImage(this.video.nativeElement, 0, 0, +this.width, +this.height);
 
-  uploadImage() {
     this.http.get("http://localhost:8000/demo/upload/", {responseType: 'text'}).subscribe(resp => {
       const parser = new DOMParser();
       const xmldoc = parser.parseFromString(resp, "text/xml");
@@ -86,7 +86,7 @@ export class NecklaceComponent implements OnInit {
         }),
       };
 
-      this.http.post("http://localhost:8000/demo/upload/", this.canvas.nativeElement.toDataURL("image/png"), HTTP_OPTIONS)
+      this.http.post("http://localhost:8000/demo/upload/", tempCanvas.toDataURL("image/png"), HTTP_OPTIONS)
         .subscribe(resp => {
           var ctx = this.canvas.nativeElement.getContext("2d");
           var img = new Image();
@@ -99,8 +99,7 @@ export class NecklaceComponent implements OnInit {
           } else {
             console.log("Sorry! Couldn't fit the necklace");
           }
-        },
-        err => {
+        }, err => {
           console.log("POST image error: ", err);
       });
     }, err => {
