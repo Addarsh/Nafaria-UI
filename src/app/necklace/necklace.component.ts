@@ -1,5 +1,12 @@
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from './error_dialog';
+
+const ERR_STR = "Sorry! Couldn't fit the necklace. Things you can try: " +
+"1. Improve lighting conditions "+
+"2. Make the neck more visible " +
+"3. Try to be in the middle of the picture.";
 
 const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
   const byteCharacters = atob(b64Data);
@@ -33,13 +40,15 @@ export class NecklaceComponent implements OnInit {
   canvas: ElementRef;
   width = "";
   height = "";
-  webRTC = false;
+  record = false;
+  loading = false;
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
-    private http: HttpClient) {
+    private http: HttpClient, public dialog: MatDialog) {
     this.width = "1280";
     this.height = "720";
-    this.webRTC = false;
+    this.record = false;
+    this.loading = false;
   }
 
   ngOnInit() {}
@@ -53,7 +62,7 @@ export class NecklaceComponent implements OnInit {
           height: { min: +this.height, ideal: +this.height},
         },
       }).then(stream => {
-        this.webRTC = true;
+        this.record = true;
         this.changeDetectorRef.detectChanges();
         this.video.nativeElement.srcObject = stream;
         this.video.nativeElement.play();
@@ -62,10 +71,8 @@ export class NecklaceComponent implements OnInit {
   }
 
   disableDemo() {
-    if(this.webRTC) {
-      this.video.nativeElement.srcObject.getVideoTracks().forEach(track => track.stop());
-      this.webRTC = false;
-    }
+    this.video.nativeElement.srcObject.getVideoTracks().forEach(track => track.stop());
+    this.record = false;
   }
 
   capture() {
@@ -73,6 +80,8 @@ export class NecklaceComponent implements OnInit {
     tempCanvas.width = +this.width;
     tempCanvas.height = +this.height;
     tempCanvas.getContext("2d").drawImage(this.video.nativeElement, 0, 0, +this.width, +this.height);
+    this.disableDemo();
+    this.loading = true;
 
     this.http.get("http://localhost:8000/demo/upload/", {responseType: 'text'}).subscribe(resp => {
       const parser = new DOMParser();
@@ -88,6 +97,7 @@ export class NecklaceComponent implements OnInit {
 
       this.http.post("http://localhost:8000/demo/upload/", tempCanvas.toDataURL("image/png"), HTTP_OPTIONS)
         .subscribe(resp => {
+          this.loading = false;
           var ctx = this.canvas.nativeElement.getContext("2d");
           var img = new Image();
           img.onload = function() {
@@ -97,13 +107,22 @@ export class NecklaceComponent implements OnInit {
             const blob = b64toBlob(resp["data"], "image/png");
             img.src = URL.createObjectURL(blob);
           } else {
-            console.log("Sorry! Couldn't fit the necklace");
+            this.showError(ERR_STR);
           }
         }, err => {
-          console.log("POST image error: ", err);
+          this.loading = false;
+          this.showError(ERR_STR);
       });
     }, err => {
-      console.log("GET image error: ", err);
+      this.loading = false;
+      this.showError(ERR_STR)
+    });
+  }
+
+  showError(err: string) {
+    const dialogRef = this.dialog.open(ErrorDialogComponent, {
+      width: '600px',
+      data: {message: err},
     });
   }
 }

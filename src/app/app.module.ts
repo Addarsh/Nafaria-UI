@@ -4,15 +4,19 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NecklaceComponent } from './necklace/necklace.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatButtonModule} from '@angular/material/button';
-import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { HttpClientModule } from '@angular/common/http';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ErrorDialogComponent } from './necklace/error_dialog';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NecklaceComponent
+    NecklaceComponent,
+    ErrorDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,12 +25,11 @@ import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
     MatToolbarModule,
     MatButtonModule,
     HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-     cookieName: 'csrftoken',
-     headerName: 'X-CSRFToken',
-   }),
+    MatProgressBarModule,
+    MatDialogModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorDialogComponent],
 })
 export class AppModule { }

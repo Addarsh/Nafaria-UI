@@ -1,10 +1,10 @@
 <mat-toolbar color="primary">Necklace Try On</mat-toolbar>
 <div>
   <div><button mat-raised-button color="primary" (click)="enableDemo()">Try it out!</button></div>
-  <div *ngIf="webRTC">
+  <div class="progressBar" *ngIf="loading"><mat-progress-bar [color]="primary" mode="indeterminate"></mat-progress-bar></div>
+  <div *ngIf="record;  else elseBlock">
     <video #video id="video" width={{this.width}} height={{this.height}} autoplay></video>
-    <canvas #canvas id="canvas" width={{this.width}} height={{this.height}}></canvas>
+    <div><button mat-raised-button color="primary" (click)="capture()">Snap Photo</button></div>
   </div>
-  <div><button mat-raised-button color="primary" (click)="capture()">Snap Photo</button></div>
-  <div><button mat-raised-button color="primary" (click)="disableDemo()">Cancel Demo</button></div>
+  <ng-template #elseBlock><canvas #canvas id="canvas" width={{this.width}} height={{this.height}}></canvas></ng-template>
 </div>
