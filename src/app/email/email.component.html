@@ -1,0 +1,13 @@
+<mat-card class="card">
+  <form class = "userForm" [formGroup]="emailForm" (ngSubmit)="onSubmit()">
+    <label>
+      <div class="field">Email:</div>
+      <input class="value" type="text" formControlName="email">
+    </label>
+    <label>
+      <div class="field">Comments:</div>
+      <input class="value" type="text" formControlName="comments">
+    </label>
+  </form>
+  <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">Submit</button>
+</mat-card>

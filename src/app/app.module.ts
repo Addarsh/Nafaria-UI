@@ -11,12 +11,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './necklace/error_dialog';
+import { EmailComponent } from './email/email.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
     AppComponent,
     NecklaceComponent,
     ErrorDialogComponent,
+    EmailComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +32,9 @@ import { ErrorDialogComponent } from './necklace/error_dialog';
     HttpClientModule,
     MatProgressBarModule,
     MatDialogModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    FlexLayoutModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
