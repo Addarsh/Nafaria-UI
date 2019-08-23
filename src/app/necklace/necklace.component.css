@@ -1,7 +1,40 @@
+.pane {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  width: 60%;
+  margin-left: 20%;
+  margin-right: 20%;
+  margin-top: 5%;
+}
+
+.try {
+  margin-left: 10%;
+}
+
+.videoDiv {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
 #video {
-    background-color: #000000;
+  background-color: #000000;
+  margin-left: -38%;
+}
+
+#canvas {
+  align-self: center;
 }
 
 .progressBar {
-  width: 80%;
+  margin-left: 10%;
+}
+
+user-details{
+  align-self: center;
+  width: 60%;
+  margin-top: 10%;
 }

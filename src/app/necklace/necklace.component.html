@@ -1,16 +1,16 @@
-<mat-toolbar color="primary">Necklace Try On</mat-toolbar>
-<div>
-  <div><button mat-raised-button color="primary" (click)="enableDemo()">Try it out!</button></div>
+<mat-toolbar color="primary">Virtual Necklace</mat-toolbar>
+<div class="pane">
+  <div class="try"><button mat-raised-button color="primary" (click)="enableDemo()">Try it out!</button></div>
   <div class="progressBar" *ngIf="loading"><mat-progress-bar [color]="primary" mode="indeterminate"></mat-progress-bar></div>
-  <div *ngIf="record; else elseBlock">
+  <div class="videoDiv" *ngIf="record; else elseBlock">
     <video #video id="video" width={{this.width}} height={{this.height}} autoplay></video>
     <div><button mat-raised-button color="primary" (click)="capture()">Snap Photo</button></div>
   </div>
   <ng-template #elseBlock>
     <canvas #canvas id="canvas" width={{this.width}} height={{this.height}}></canvas>
   </ng-template>
-  <div *ngIf="downloadPic">
-    <button mat-raised-button color="primary" (click)="download()">Download pic</button>
+  <div *ngIf="downloadPic" class="try">
+    <button mat-raised-button color="primary" (click)="download()">Download</button>
   </div>
+  <user-details></user-details>
 </div>
-<user-details></user-details>
