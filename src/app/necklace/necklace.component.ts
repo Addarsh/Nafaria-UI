@@ -71,13 +71,15 @@ export class NecklaceComponent implements OnInit {
         this.changeDetectorRef.detectChanges();
         this.video.nativeElement.srcObject = stream;
         this.video.nativeElement.play();
-      }).catch((err) => {console.log('Promise Rejected: ', err);});
+      }).catch((err) => {this.showError("Error in access to camera");});
     }
   }
 
   disableDemo() {
     this.video.nativeElement.srcObject.getVideoTracks().forEach(track => track.stop());
     this.record = false;
+
+    // Reset canvas to necklace overlay size.
     this.width = "480";
     this.height = "600";
   }
@@ -110,14 +112,17 @@ export class NecklaceComponent implements OnInit {
             return
           }
           this.downloadPic = true;
+          const checkCanvas = setInterval(()=> {
+            var ctx = this.canvas.nativeElement.getContext("2d");
+            var img = new Image();
+            img.onload = function() {
+              ctx.drawImage(img, 0, 0);
+            }
+            const blob = b64toBlob(resp["data"], "image/png");
+            img.src = URL.createObjectURL(blob);
 
-          var ctx = this.canvas.nativeElement.getContext("2d");
-          var img = new Image();
-          img.onload = function() {
-            ctx.drawImage(img, 0, 0);
-          }
-          const blob = b64toBlob(resp["data"], "image/png");
-          img.src = URL.createObjectURL(blob);
+            clearInterval(checkCanvas);
+          }, 100);        
         }, err => {
           this.loading = false;
           this.showError(ERR_STR);

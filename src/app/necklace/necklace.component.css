@@ -8,8 +8,14 @@
   margin-top: 5%;
 }
 
+.button-pane {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
 .try {
-  margin-left: 10%;
+  width: 100%;
 }
 
 .videoDiv {
