@@ -1,7 +1,8 @@
-import { Component, OnInit, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './error_dialog';
+import { StepperSelectionEvent } from '@angular/cdk/stepper';
 
 const ERR_STR = "Sorry! Couldn't fit the necklace. Things you can try: " +
 "1. Improve lighting conditions "+
@@ -33,38 +34,30 @@ const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
   templateUrl: './necklace.component.html',
   styleUrls: ['./necklace.component.css']
 })
-export class NecklaceComponent implements OnInit {
+export class NecklaceComponent{
   @ViewChild("video", {static: false})
   video: ElementRef;
   @ViewChild("canvas", {static: false})
   canvas: ElementRef;
-  width = "";
-  height = "";
   record = false;
   loading = false;
   downloadPic = false;
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
     private http: HttpClient, public dialog: MatDialog) {
-    this.width = "";
-    this.height = "";
     this.record = false;
     this.loading = false;
     this.downloadPic = false;
   }
 
-  ngOnInit() {}
-
   enableDemo() {
-    this.width = "1280";
-    this.height = "720";
     this.downloadPic = false;
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: "user",
-          width: { min: +this.width, ideal: +this.width },
-          height: { min: +this.height, ideal: +this.height},
+          width: { min: 1280, ideal: 1280 },
+          height: { min: 720, ideal: 720},
         },
       }).then(stream => {
         this.record = true;
@@ -76,19 +69,17 @@ export class NecklaceComponent implements OnInit {
   }
 
   disableDemo() {
-    this.video.nativeElement.srcObject.getVideoTracks().forEach(track => track.stop());
+    if (this.video) {
+      this.video.nativeElement.srcObject.getVideoTracks().forEach(track => track.stop());
+    }
     this.record = false;
-
-    // Reset canvas to necklace overlay size.
-    this.width = "480";
-    this.height = "600";
   }
 
   capture() {
     const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = +this.width;
-    tempCanvas.height = +this.height;
-    tempCanvas.getContext("2d").drawImage(this.video.nativeElement, 0, 0, +this.width, +this.height);
+    tempCanvas.width = 1280;
+    tempCanvas.height = 720;
+    tempCanvas.getContext("2d").drawImage(this.video.nativeElement, 0, 0, 1280, 720);
     this.disableDemo();
     this.loading = true;
 
@@ -122,7 +113,7 @@ export class NecklaceComponent implements OnInit {
             img.src = URL.createObjectURL(blob);
 
             clearInterval(checkCanvas);
-          }, 100);        
+          }, 100);
         }, err => {
           this.loading = false;
           this.showError(ERR_STR);
@@ -145,5 +136,13 @@ export class NecklaceComponent implements OnInit {
       width: '600px',
       data: {message: err},
     });
+  }
+
+  stepperChange(event: StepperSelectionEvent) {
+    if(event.selectedIndex == 1){
+      this.enableDemo();
+    } else {
+      this.disableDemo();
+    }
   }
 }

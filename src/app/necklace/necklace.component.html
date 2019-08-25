@@ -1,23 +1,40 @@
 <mat-toolbar color="primary">Virtual Necklace</mat-toolbar>
 <div class="pane">
-  <div *ngIf="!record">
-    <button mat-raised-button color="primary" class="try" (click)="enableDemo()">Try it out!</button>
-  </div>
-  <div class="progressBar" *ngIf="loading"><mat-progress-bar [color]="primary" mode="indeterminate"></mat-progress-bar></div>
-  <div class="videoDiv" *ngIf="record">
-    <video #video id="video" width={{this.width}} height={{this.height}} autoplay></video>
-  </div>
-  <div *ngIf="downloadPic">
-    <canvas #canvas id="canvas" width={{this.width}} height={{this.height}}></canvas>
-  </div>
-  <div class="button-pane">
-    <div *ngIf="downloadPic">
-      <button mat-raised-button color="primary" (click)="download()">Download</button>
-    </div>
-    <div *ngIf="record">
-      <button mat-raised-button color="primary" (click)="capture()">Snap Photo</button>
-      <button mat-raised-button color="warn" (click)="disableDemo()">Cancel</button>
-    </div>
-  </div>
+  <mat-accordion>
+    <mat-expansion-panel (closed)="disableDemo(); stepper.reset()">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Try On
+        </mat-panel-title>
+        <mat-panel-description>
+          Check out necklaces for yourself!
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <mat-vertical-stepper (selectionChange)="stepperChange($event)" linear=true  #stepper >
+        <mat-step label="Select Necklace">
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </mat-step>
+        <mat-step label="Snap photo">
+          <div *ngIf="record">
+            <video #video id="video" width="1280" height="720" autoplay></video>
+            <button id="capture-btn" mat-raised-button color="primary" (click)="capture()" matStepperNext>Capture</button>
+          </div>
+        </mat-step>
+        <mat-step label="Results!">
+          <div class="progressBar" *ngIf="loading"><mat-progress-bar [color]="primary" mode="indeterminate"></mat-progress-bar></div>
+          <div id="results"  *ngIf="downloadPic">
+            <div id="result-canvas">
+              <canvas #canvas width="480" height="640"></canvas>
+              <button mat-raised-button color="primary" (click)="download()">Download</button>
+            </div>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
+
+    </mat-expansion-panel>
+  </mat-accordion>
   <user-details></user-details>
 </div>

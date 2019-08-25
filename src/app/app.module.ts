@@ -15,6 +15,9 @@ import { EmailComponent } from './email/email.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -35,6 +38,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     ReactiveFormsModule,
     MatCardModule,
     FlexLayoutModule,
+    MatExpansionModule,
+    MatStepperModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
