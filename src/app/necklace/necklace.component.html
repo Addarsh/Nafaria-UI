@@ -1,14 +1,19 @@
-<mat-toolbar color="primary">Virtual Necklace</mat-toolbar>
+<mat-toolbar id="toolbar">Nefaria</mat-toolbar>
+<mat-grid-list class="call" cols="1" rowHeight="400px">
+  <mat-grid-tile>
+    <div id="call-content">
+      <h1>Virtually wear Necklaces</h1>
+      <h2>Try before you buy.</h2>
+    </div>
+  </mat-grid-tile>
+</mat-grid-list>
 <div class="pane">
   <mat-accordion>
     <mat-expansion-panel (closed)="disableDemo(); stepper.reset()">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Try On
+          Try it out!
         </mat-panel-title>
-        <mat-panel-description>
-          Check out necklaces for yourself!
-        </mat-panel-description>
       </mat-expansion-panel-header>
 
       <mat-vertical-stepper (selectionChange)="stepperChange($event)" linear=true  #stepper >

@@ -1,3 +1,29 @@
+#toolbar{
+  background: #1b8ba8;
+  color: #ffffff;
+}
+
+.call {
+  background: #e16645;
+}
+
+#call-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+h1 {
+  color: #ffffff;
+  font-size: 48px;
+}
+
+h2 {
+  color: #ffffff;
+  font-family: Alegreya;
+}
+
 .pane {
   display: flex;
   flex-direction: column;
