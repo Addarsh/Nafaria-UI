@@ -34,15 +34,15 @@
       <mat-step label="Snap photo">
         <div *ngIf="record">
           <video #video id="video" width="1280" height="720" autoplay [style.margin-left.px]="innerWidth"></video>
-          <button id="capture-btn" mat-raised-button color="primary" (click)="capture()" matStepperNext>Capture</button>
+          <button id="capture-btn" mat-raised-button (click)="capture()" matStepperNext>Capture</button>
         </div>
       </mat-step>
       <mat-step label="Results!">
-        <div class="progressBar" *ngIf="loading"><mat-progress-bar [color]="primary" mode="indeterminate"></mat-progress-bar></div>
+        <div class="progressBar" *ngIf="loading"><mat-progress-bar mode="indeterminate"></mat-progress-bar></div>
         <div id="results"  *ngIf="downloadPic">
           <div id="result-canvas">
             <canvas #canvas width="480" height="640"></canvas>
-            <button mat-raised-button color="primary" (click)="download()">Download</button>
+            <button mat-raised-button (click)="download()">Download</button>
           </div>
         </div>
       </mat-step>
@@ -50,3 +50,6 @@
   </mat-accordion>
   <user-details></user-details>
 </div>
+<mat-toolbar id="privacy-policy">
+  <a href="https://app.termly.io/document/privacy-policy/67f50e31-f977-48f9-bc9c-cb93c19eb75f" target="_blank">Privacy Policy</a>
+</mat-toolbar>

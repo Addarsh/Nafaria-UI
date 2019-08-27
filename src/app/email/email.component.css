@@ -28,3 +28,8 @@ label {
   width: 70%;
   font-size: 16px;
 }
+
+button {
+  color: #ffffff;
+  background-color: #1C1C1BFF;
+}

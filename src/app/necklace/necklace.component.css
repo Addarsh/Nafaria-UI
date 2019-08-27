@@ -47,7 +47,6 @@ mat-grid-tile div {
   align-items: center;
 }
 
-
 .pane {
   display: flex;
   flex-direction: column;
@@ -64,6 +63,10 @@ mat-grid-tile div {
 
 #video {
   background-color: #000000;
+}
+
+button {
+  background-color: #d97289;
 }
 
 #results {
@@ -83,4 +86,18 @@ user-details{
   align-self: center;
   width: 40vw;
   margin-top: 10vh;
+}
+
+a {
+  text-decoration: none;
+  font-size: 0.7em;
+  color: #000000;
+}
+
+#privacy-policy {
+  margin-top: 5vh;
+  height: 5vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
