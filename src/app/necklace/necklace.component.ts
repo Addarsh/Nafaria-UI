@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, ElementRef, ViewChild, ChangeDetectorRef, HostListener, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './error_dialog';
@@ -29,12 +29,16 @@ const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
   return blob;
 }
 
+const quadratic = (x) => {
+  return -1.2939465*Math.pow(10, -4)*x*x + 0.70246836*x - 799.33031;
+}
+
 @Component({
   selector: 'necklace-demo',
   templateUrl: './necklace.component.html',
   styleUrls: ['./necklace.component.css']
 })
-export class NecklaceComponent{
+export class NecklaceComponent implements OnInit {
   @ViewChild("video", {static: false})
   video: ElementRef;
   @ViewChild("canvas", {static: false})
@@ -42,12 +46,22 @@ export class NecklaceComponent{
   record = false;
   loading = false;
   downloadPic = false;
+  public innerWidth = 0;
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
     private http: HttpClient, public dialog: MatDialog) {
     this.record = false;
     this.loading = false;
     this.downloadPic = false;
+  }
+
+  ngOnInit() {
+    this.innerWidth = quadratic(window.innerWidth);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.innerWidth =  quadratic(window.innerWidth);
   }
 
   enableDemo() {

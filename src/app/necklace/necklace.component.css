@@ -1,10 +1,16 @@
 #toolbar{
-  background: #1b8ba8;
-  color: #ffffff;
+  background: #CE4A7EFF;
+  color: #1C1C1BFF;
+  font-family: cursive;
 }
 
 .call {
-  background: #e16645;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background: #1C1C1BFF;
+  height: 70vh;
 }
 
 #call-content {
@@ -15,23 +21,41 @@
 }
 
 h1 {
-  color: #ffffff;
-  font-size: 48px;
+  color: #CE4A7EFF;
+  font-size: 42px;
 }
 
 h2 {
   color: #ffffff;
-  font-family: Alegreya;
+  margin-top: 0;
+  font-family:cursive;
 }
+
+mat-grid-tile{
+  margin-top: 2vh;
+  border-right: 1px solid #cccccc;
+}
+
+mat-grid-tile h1 {
+  font-family:cursive;
+}
+
+mat-grid-tile div {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 
 .pane {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  width: 60%;
-  margin-left: 20%;
-  margin-right: 20%;
-  margin-top: 5%;
+  width: 80vw;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  margin-top: 10vh;
 }
 
 #capture-btn {
@@ -40,7 +64,6 @@ h2 {
 
 #video {
   background-color: #000000;
-  margin-left: -35%;
 }
 
 #results {
@@ -58,6 +81,6 @@ h2 {
 
 user-details{
   align-self: center;
-  width: 60%;
-  margin-top: 10%;
+  width: 40vw;
+  margin-top: 10vh;
 }
