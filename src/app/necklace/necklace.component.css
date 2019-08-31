@@ -57,6 +57,30 @@ mat-grid-tile div {
   margin-top: 10vh;
 }
 
+#selection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+#necklace-options {
+  display: flex;
+  flex-direction: row;
+}
+
+.necklace-pic {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.necklace-pic img {
+  max-width: 90%;
+  width: auto;
+  height: auto;
+}
+
 #capture-btn {
   width: 100%;
 }

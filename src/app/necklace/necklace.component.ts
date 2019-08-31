@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from './error_dialog';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
+import { MatRadioChange } from '@angular/material/radio';
 
 const ERR_STR = "Sorry! Couldn't fit the necklace. Things you can try: " +
 "1. Improve lighting conditions "+
@@ -47,12 +48,14 @@ export class NecklaceComponent implements OnInit {
   loading = false;
   downloadPic = false;
   public innerWidth = 0;
+  selectedNecklace = "";
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
     private http: HttpClient, public dialog: MatDialog) {
     this.record = false;
     this.loading = false;
     this.downloadPic = false;
+    this.selectedNecklace = "1";
   }
 
   ngOnInit() {
@@ -109,7 +112,10 @@ export class NecklaceComponent implements OnInit {
         }),
       };
 
-      this.http.post("http://localhost:8000/demo/upload/", tempCanvas.toDataURL("image/png"), HTTP_OPTIONS)
+      this.http.post("http://localhost:8000/demo/upload/", {
+        "necklace": this.selectedNecklace,
+        "data": tempCanvas.toDataURL("image/png"),
+      }, HTTP_OPTIONS)
         .subscribe(resp => {
           this.loading = false;
           if(resp["data"] === "") {
@@ -147,7 +153,7 @@ export class NecklaceComponent implements OnInit {
 
   showError(err: string) {
     const dialogRef = this.dialog.open(ErrorDialogComponent, {
-      width: '600px',
+      width: '600vw',
       data: {message: err},
     });
   }
@@ -158,5 +164,9 @@ export class NecklaceComponent implements OnInit {
     } else {
       this.disableDemo();
     }
+  }
+
+  selectionChange(event: MatRadioChange) {
+    this.selectedNecklace = event.value;
   }
 }

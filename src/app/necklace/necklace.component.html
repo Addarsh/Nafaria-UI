@@ -27,8 +27,21 @@
   <mat-accordion>
     <mat-vertical-stepper (selectionChange)="stepperChange($event)" linear=true  #stepper >
       <mat-step label="Select Necklace">
-        <div>
-          <button mat-button matStepperNext>Next</button>
+        <div id="selection">
+          <mat-radio-group id="necklace-options" (change)="selectionChange($event)">
+            <div class="necklace-pic">
+              <img src="assets/necklace-collection/1.jpg">
+              <mat-radio-button value="1" [checked]=true></mat-radio-button>
+            </div>
+            <div class="necklace-pic">
+              <img src="assets/necklace-collection/2.jpg">
+              <mat-radio-button value="2"></mat-radio-button>
+            </div>
+            <div class="necklace-pic">
+              <img src="assets/necklace-collection/3.jpg">
+              <mat-radio-button value="3"></mat-radio-button>
+            </div>
+          </mat-radio-group>
         </div>
       </mat-step>
       <mat-step label="Snap photo">
