@@ -20,6 +20,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatInputModule } from '@angular/material/input';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatIconModule,
     MatGridListModule,
     MatRadioModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

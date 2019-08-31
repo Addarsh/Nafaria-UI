@@ -21,15 +21,17 @@ label {
 .field {
   width: 30%;
   line-height: 26px;
+  font-size: 1.2vw;
 }
 
 .value {
   height: 20px;
   width: 70%;
-  font-size: 16px;
+  font-size: 1.2vw;
 }
 
 button {
   color: #ffffff;
   background-color: #1C1C1BFF;
+  font-size: 1.2vw;
 }

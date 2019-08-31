@@ -10,7 +10,13 @@
   justify-content: space-around;
   align-items: center;
   background: #1C1C1BFF;
-  height: 70vh;
+  height: 40vw;
+}
+
+.call img {
+  max-height: 40%;
+  width: auto;
+  height: auto;
 }
 
 #call-content {
@@ -22,13 +28,14 @@
 
 h1 {
   color: #CE4A7EFF;
-  font-size: 42px;
+  font-size: 4vw;
 }
 
-h2 {
+#call-content h2 {
   color: #ffffff;
   margin-top: 0;
-  font-family:cursive;
+  font-family: cursive;
+  font-size: 2.8vw;
 }
 
 mat-grid-tile{
@@ -38,6 +45,7 @@ mat-grid-tile{
 
 mat-grid-tile h1 {
   font-family:cursive;
+  font-size: 2.7vw;
 }
 
 mat-grid-tile div {
@@ -54,7 +62,7 @@ mat-grid-tile div {
   width: 80vw;
   margin-left: 10vw;
   margin-right: 10vw;
-  margin-top: 10vh;
+  margin-top: 5vw;
 }
 
 #selection {
@@ -79,6 +87,10 @@ mat-grid-tile div {
   max-width: 90%;
   width: auto;
   height: auto;
+}
+
+mat-radio-button {
+  margin-top: 2vh;
 }
 
 #capture-btn {
@@ -106,16 +118,23 @@ button {
   flex-direction: column;
 }
 
-user-details{
-  align-self: center;
-  width: 40vw;
-  margin-top: 10vh;
+mat-accordion {
+  margin-bottom: 10vh;
 }
 
-a {
-  text-decoration: none;
-  font-size: 0.7em;
-  color: #000000;
+#final-msg {
+  display: flex;
+  flex-direction: row;
+}
+
+.pane h2 {
+  color: #CE4A7EFF;
+  font-size: 1.7vw;
+}
+
+user-details{
+  margin-left: 5vw;
+  flex: 1 1 auto;
 }
 
 #privacy-policy {
@@ -123,5 +142,17 @@ a {
   height: 5vh;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+}
+
+#privacy-policy a {
+  text-decoration: none;
+  font-size: 1vw;
+  color: #000000;
+}
+
+ #privacy-policy p {
+  text-decoration: none;
+  font-size: 1vw;
+  color: #000000;
 }
