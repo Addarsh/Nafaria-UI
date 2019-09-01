@@ -2,7 +2,7 @@
 <div class="call">
   <img src="assets/woman.jpg">
   <div id="call-content">
-    <h1>Virtually wear Necklaces</h1>
+    <h1>Wear Necklaces at home</h1>
     <h2>Try before you buy</h2>
   </div>
 </div>
@@ -27,25 +27,28 @@
   <mat-accordion>
     <mat-vertical-stepper (selectionChange)="stepperChange($event)" linear=true  #stepper >
       <mat-step label="Select Necklace">
-        <div id="selection">
-          <mat-radio-group id="necklace-options" (change)="selectionChange($event)">
-            <div class="necklace-pic">
-              <img src="assets/necklace-collection/1.jpg">
-              <mat-radio-button value="1" [checked]=true></mat-radio-button>
-            </div>
-            <div class="necklace-pic">
-              <img src="assets/necklace-collection/2.jpg">
-              <mat-radio-button value="2"></mat-radio-button>
-            </div>
-            <div class="necklace-pic">
-              <img src="assets/necklace-collection/3.jpg">
-              <mat-radio-button value="3"></mat-radio-button>
-            </div>
-          </mat-radio-group>
-        </div>
+        <mat-radio-group id="necklace-options" (change)="selectionChange($event)">
+          <div class="necklace-pic">
+            <img src="assets/necklace-collection/1.jpg">
+            <mat-radio-button value="1" [checked]=true></mat-radio-button>
+          </div>
+          <div class="necklace-pic">
+            <img src="assets/necklace-collection/2.jpg">
+            <mat-radio-button value="2"></mat-radio-button>
+          </div>
+          <div class="necklace-pic">
+            <img src="assets/necklace-collection/3.jpg">
+            <mat-radio-button value="3"></mat-radio-button>
+          </div>
+        </mat-radio-group>
       </mat-step>
       <mat-step label="Snap photo">
         <div *ngIf="record">
+          <div id="instructions">
+            <p>* We <b style="color:red;">DO NOT</b>  store the video stream from your camera. It is solely used for clicking a picture.</p>
+            <p>* We <b style="color:red;">DO NOT</b> store the captured picture.</p>
+            <p>* For <b style="color:blue;">BEST</b> results, look straight at the camera with your neck visible and well lit sorroundings. And make sure to smile. :)</p>
+          </div>
           <video #video id="video" width="1280" height="720" autoplay [style.margin-left.px]="innerWidth"></video>
           <button id="capture-btn" mat-raised-button (click)="capture()" matStepperNext>Capture</button>
         </div>
@@ -64,7 +67,7 @@
   <div id="final-msg">
     <div id="user-text">
       <h2>Interested in learning more?</h2>
-      <h2>Leave your email and any other comments or feedback.</h2>
+      <h2>Leave your email and any comments or feedback.</h2>
       <h2>Stay tuned!</h2>
     </div>
     <user-details></user-details>

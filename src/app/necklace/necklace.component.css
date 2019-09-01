@@ -35,11 +35,11 @@ h1 {
   color: #ffffff;
   margin-top: 0;
   font-family: cursive;
-  font-size: 2.8vw;
+  font-size: 2vw;
 }
 
 mat-grid-tile{
-  margin-top: 2vh;
+  margin-top: 1vw;
   border-right: 1px solid #cccccc;
 }
 
@@ -65,16 +65,10 @@ mat-grid-tile div {
   margin-top: 5vw;
 }
 
-#selection {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
-
 #necklace-options {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
 }
 
 .necklace-pic {
@@ -90,7 +84,20 @@ mat-grid-tile div {
 }
 
 mat-radio-button {
-  margin-top: 2vh;
+  margin-top: 1.5vw;
+}
+
+#instructions {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 2vw;
+}
+
+#instructions p {
+  font-size: 1vw;
+  margin-top: 1vw;
+  margin-bottom: 0;
 }
 
 #capture-btn {
@@ -119,7 +126,7 @@ button {
 }
 
 mat-accordion {
-  margin-bottom: 10vh;
+  margin-bottom: 5vw;
 }
 
 #final-msg {
@@ -148,11 +155,11 @@ user-details{
 #privacy-policy a {
   text-decoration: none;
   font-size: 1vw;
-  color: #000000;
+  color: #1C1C1BFF;
 }
 
  #privacy-policy p {
   text-decoration: none;
   font-size: 1vw;
-  color: #000000;
+  color: #1C1C1BFF;
 }
