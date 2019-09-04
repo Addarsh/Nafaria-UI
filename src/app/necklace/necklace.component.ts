@@ -36,6 +36,10 @@ const quadratic = (x) => {
   return -1.2939465*Math.pow(10, -4)*x*x + 0.70246836*x - 799.33031;
 }
 
+const isMobile = () => {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+}
+
 @Component({
   selector: 'necklace-demo',
   templateUrl: './necklace.component.html',
@@ -53,6 +57,8 @@ export class NecklaceComponent implements OnInit {
   selectedNecklace = "";
   imageURL = "";
   signUpURL = "";
+  videoWidth = 0;
+  videoHeight = 0;
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
     private http: HttpClient, public dialog: MatDialog,
@@ -68,6 +74,13 @@ export class NecklaceComponent implements OnInit {
 
   ngOnInit() {
     this.innerWidth = quadratic(window.innerWidth);
+    if (isMobile()) {
+      this.videoWidth = 720;
+      this.videoHeight = 1280;
+    } else {
+      this.videoWidth = 1280;
+      this.videoHeight = 720;
+    }
   }
 
   @HostListener('window:resize', ['$event'])
@@ -81,8 +94,8 @@ export class NecklaceComponent implements OnInit {
       navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: "user",
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
+          width: { ideal: this.videoWidth },
+          height: { ideal: this.videoHeight },
         },
       }).then(stream => {
         this.record = true;
@@ -108,9 +121,9 @@ export class NecklaceComponent implements OnInit {
 
   capture() {
     const tempCanvas = document.createElement('canvas');
-    tempCanvas.width = 1280;
-    tempCanvas.height = 720;
-    tempCanvas.getContext("2d").drawImage(this.video.nativeElement, 0, 0, 1280, 720);
+    tempCanvas.width = 480;
+    tempCanvas.height = 640;
+    tempCanvas.getContext("2d").drawImage(this.video.nativeElement, (this.videoWidth-480)/2, 0, 480, 640, 0, 0, 480, 640);
     this.disableDemo();
     this.loading = true;
 
