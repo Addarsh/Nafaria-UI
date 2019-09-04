@@ -48,6 +48,10 @@ mat-grid-tile h1 {
   font-size: 2.7vw;
 }
 
+mat-grid-tile a {
+  text-decoration: none;
+}
+
 mat-grid-tile div {
   display: flex;
   flex-direction: column;
