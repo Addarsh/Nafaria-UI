@@ -81,14 +81,13 @@ export class NecklaceComponent implements OnInit {
       navigator.mediaDevices.getUserMedia({
         video: {
           facingMode: "user",
-          width: { min: 1280, ideal: 1280 },
-          height: { min: 720, ideal: 720},
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
         },
       }).then(stream => {
         this.record = true;
         this.changeDetectorRef.detectChanges();
         this.video.nativeElement.srcObject = stream;
-        this.video.nativeElement.play();
       }).catch((err) => {this.showError("Error in access to camera: " + err.toString());});
     }
   }
