@@ -73,19 +73,22 @@ export class NecklaceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.innerWidth = quadratic(window.innerWidth);
-    if (isMobile()) {
-      this.videoWidth = 720;
-      this.videoHeight = 1280;
-    } else {
+    if (!isMobile()) {
       this.videoWidth = 1280;
       this.videoHeight = 720;
+      this.innerWidth = quadratic(window.innerWidth);
+    } else {
+      this.videoWidth = 640;
+      this.videoHeight = 640;
+      this.innerWidth = -(window.innerWidth-180);
     }
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    this.innerWidth =  quadratic(window.innerWidth);
+    if (!isMobile()) {
+      this.innerWidth =  quadratic(window.innerWidth);
+    }
   }
 
   enableDemo() {

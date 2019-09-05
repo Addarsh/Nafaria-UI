@@ -49,7 +49,7 @@
             <p>* We <b style="color:red;">DO NOT</b> store the captured picture.</p>
             <h3>* For <b style="color:blue;">BEST</b> results, look straight at the camera with your <b style="color:blue;">NECK VISIBLE</b> and <b style="color:blue;">WELL LIT</b> sorroundings. And make sure to smile. :)</h3>
           </div>
-          <video #video id="video" width="videoWidth.toString()" height="videoHeight.toString()" autoplay muted playsinline [style.margin-left.px]="innerWidth"></video>
+          <video #video id="video" width="videoWidth" height="videoHeight" autoplay muted playsinline [style.margin-left.px]="innerWidth"></video>
           <button id="capture-btn" mat-raised-button (click)="capture()" matStepperNext>Capture</button>
         </div>
       </mat-step>

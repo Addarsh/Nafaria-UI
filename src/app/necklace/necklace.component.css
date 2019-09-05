@@ -59,14 +59,30 @@ mat-grid-tile div {
   align-items: center;
 }
 
-.pane {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  width: 80vw;
-  margin-left: 10vw;
-  margin-right: 10vw;
-  margin-top: 5vw;
+/* For mobile screen */
+@media (max-width: 400px) {
+  .pane {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100vw;
+    margin-left: 0vw;
+    margin-right: 0vw;
+    margin-top: 5vw;
+  }
+}
+
+/* For big screen */
+@media (min-width: 400px) {
+  .pane {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 5vw;
+  }
 }
 
 #necklace-options {
@@ -119,12 +135,10 @@ button {
 #results {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 #result-canvas {
-  align-self: center;
   display: flex;
   flex-direction: column;
 }
@@ -133,9 +147,23 @@ mat-accordion {
   margin-bottom: 5vw;
 }
 
-#final-msg {
-  display: flex;
-  flex-direction: row;
+/* For mobile screen */
+@media (max-width: 400px) {
+  #final-msg {
+    display: flex;
+    flex-direction: row;
+    width: 90vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+  }
+}
+
+/* For big screen */
+@media (min-width: 400px) {
+  #final-msg {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 .pane h2 {
