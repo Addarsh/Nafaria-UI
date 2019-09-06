@@ -40,6 +40,10 @@ const isMobile = () => {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 }
 
+const parseURL = (url: string) => {
+  return url.split("/").slice(0,3).join("/");
+}
+
 @Component({
   selector: 'necklace-demo',
   templateUrl: './necklace.component.html',
@@ -59,6 +63,7 @@ export class NecklaceComponent implements OnInit {
   signUpURL = "";
   videoWidth = 0;
   videoHeight = 0;
+  bigScreen = false;
 
   constructor(private changeDetectorRef: ChangeDetectorRef,
     private http: HttpClient, public dialog: MatDialog,
@@ -68,8 +73,8 @@ export class NecklaceComponent implements OnInit {
     this.loading = false;
     this.downloadPic = false;
     this.selectedNecklace = "1";
-    this.imageURL = window.location.href + "demo/upload/";
-    this.signUpURL = window.location.href + "demo/signup/";
+    this.imageURL = parseURL(window.location.href) + "/demo/upload/";
+    this.signUpURL = parseURL(window.location.href) + "/demo/signup/";
   }
 
   ngOnInit() {
@@ -77,16 +82,17 @@ export class NecklaceComponent implements OnInit {
       this.videoWidth = 1280;
       this.videoHeight = 720;
       this.innerWidth = quadratic(window.innerWidth);
+      this.bigScreen = true;
     } else {
       this.videoWidth = 640;
       this.videoHeight = 640;
-      this.innerWidth = -(window.innerWidth-180);
+      this.innerWidth = window.innerWidth-530;
     }
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
-    if (!isMobile()) {
+    if (this.bigScreen) {
       this.innerWidth =  quadratic(window.innerWidth);
     }
   }

@@ -2,20 +2,20 @@
   background: #CE4A7EFF;
   color: #1C1C1BFF;
   font-family: cursive;
+  font-weight: bold;
+  font-size: 28px;
 }
 
 .call {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   background: #1C1C1BFF;
-  height: 40vw;
 }
 
 .call img {
-  max-height: 40%;
-  width: auto;
+  width: 500px;
   height: auto;
 }
 
@@ -26,26 +26,87 @@
   align-items: center;
 }
 
-h1 {
+#call-content h1 {
   color: #CE4A7EFF;
-  font-size: 4vw;
+  text-align: center;
+  margin-top: 80px;
 }
 
 #call-content h2 {
   color: #ffffff;
   margin-top: 0;
   font-family: cursive;
-  font-size: 2vw;
+}
+
+/* For mobile screen */
+@media (max-width: 500px) {
+  #call-content h1 {
+    font-size: 42px;
+  }
+
+  #call-content h2 {
+    font-size: 24px;
+  }
+
+  mat-grid-tile h1 {
+    font-size: 32px;
+  }
+
+  .pane {
+    width: 100vw;
+  }
+
+  #final-msg {
+    width: 90vw;
+    margin-left: 5vw;
+    margin-right: 5vw;
+  }
+
+  #user-text h2 {
+    font-size: 26px;
+  }
+
+  user-details{
+    align-self: stretch;
+  }
+}
+
+/* For big screen */
+@media (min-width: 500px) {
+  #call-content h1 {
+    font-size: 52px;
+  }
+
+  #call-content h2 {
+    font-size: 30px;
+  }
+
+  mat-grid-tile h1 {
+    font-size: 42px;
+  }
+
+  .pane {
+    width: 80vw;
+    margin-left: 10vw;
+    margin-right: 10vw;
+  }
+
+  #user-text h2 {
+    font-size: 36px;
+  }
+
+  user-details{
+    width: 80%;
+  }
 }
 
 mat-grid-tile{
-  margin-top: 1vw;
-  border-right: 1px solid #cccccc;
+  margin-top: 30px;
 }
 
 mat-grid-tile h1 {
   font-family:cursive;
-  font-size: 2.7vw;
+  color: #CE4A7EFF;
 }
 
 mat-grid-tile a {
@@ -59,47 +120,29 @@ mat-grid-tile div {
   align-items: center;
 }
 
-/* For mobile screen */
-@media (max-width: 400px) {
-  .pane {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 100vw;
-    margin-left: 0vw;
-    margin-right: 0vw;
-    margin-top: 5vw;
-  }
+.pane {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin-top: 60px;
 }
 
-/* For big screen */
-@media (min-width: 400px) {
-  .pane {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 80vw;
-    margin-left: 10vw;
-    margin-right: 10vw;
-    margin-top: 5vw;
-  }
-}
-
-#necklace-options {
+mat-radio-group {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .necklace-pic {
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 30px;
 }
 
 .necklace-pic img {
-  max-width: 90%;
-  width: auto;
+  width: 320px;
   height: auto;
 }
 
@@ -115,8 +158,8 @@ mat-radio-button {
 }
 
 #instructions p {
-  font-size: 1vw;
-  margin-top: 1vw;
+  font-size: 14px;
+  margin-top: 10px;
   margin-bottom: 0;
 }
 
@@ -147,33 +190,16 @@ mat-accordion {
   margin-bottom: 5vw;
 }
 
-/* For mobile screen */
-@media (max-width: 400px) {
-  #final-msg {
-    display: flex;
-    flex-direction: row;
-    width: 90vw;
-    margin-left: 5vw;
-    margin-right: 5vw;
-  }
+#final-msg {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-/* For big screen */
-@media (min-width: 400px) {
-  #final-msg {
-    display: flex;
-    flex-direction: row;
-  }
-}
-
-.pane h2 {
+#user-text h2 {
   color: #CE4A7EFF;
-  font-size: 1.7vw;
-}
-
-user-details{
-  margin-left: 5vw;
-  flex: 1 1 auto;
+  text-align: center;
 }
 
 #privacy-policy {
@@ -186,12 +212,12 @@ user-details{
 
 #privacy-policy a {
   text-decoration: none;
-  font-size: 1vw;
+  font-size: 16px;
   color: #1C1C1BFF;
 }
 
  #privacy-policy p {
   text-decoration: none;
-  font-size: 1vw;
+  font-size: 16px;
   color: #1C1C1BFF;
 }

@@ -24,56 +24,80 @@
   </mat-grid-tile>
 </mat-grid-list>
 <div class="pane">
+  <ng-template #stepOne>
+    <mat-radio-group id="necklace-options" (change)="selectionChange($event)">
+      <div class="necklace-pic">
+        <img src="assets/necklace-collection/1.jpg">
+        <mat-radio-button value="1" [checked]=true></mat-radio-button>
+      </div>
+      <div class="necklace-pic">
+        <img src="assets/necklace-collection/2.jpg">
+        <mat-radio-button value="2"></mat-radio-button>
+      </div>
+      <div class="necklace-pic">
+        <img src="assets/necklace-collection/3.jpg">
+        <mat-radio-button value="3"></mat-radio-button>
+      </div>
+    </mat-radio-group>
+  </ng-template>
+  <ng-template #stepTwo>
+    <div *ngIf="record">
+      <div id="instructions">
+        <p>* We <b style="color:red;">DO NOT</b>  store the video stream from your camera. It is solely used for clicking a picture.</p>
+        <p>* We <b style="color:red;">DO NOT</b> store the captured picture.</p>
+        <p>* For <b style="color:blue;">BEST</b> results, look straight at the camera(don't be too close or too far from the camera) with your <b style="color:blue;">NECK VISIBLE</b> and <b style="color:blue;">WELL LIT</b> sorroundings. Smile!</p>
+      </div>
+      <video #video id="video" width="videoWidth" height="videoHeight" autoplay muted playsinline [style.margin-left.px]="innerWidth"></video>
+    </div>
+  </ng-template>
+  <ng-template #stepThree>
+    <div class="progressBar" *ngIf="loading"><mat-progress-bar mode="indeterminate"></mat-progress-bar></div>
+    <div id="results"  *ngIf="downloadPic">
+      <div id="result-canvas">
+        <canvas #canvas width="480" height="640"></canvas>
+        <button mat-raised-button (click)="download()">Download</button>
+      </div>
+    </div>
+  </ng-template>
   <mat-accordion>
-    <mat-vertical-stepper (selectionChange)="stepperChange($event)" linear=true  #stepper >
-      <mat-step label="Select Necklace">
-        <mat-radio-group id="necklace-options" (change)="selectionChange($event)">
-          <div class="necklace-pic">
-            <img src="assets/necklace-collection/1.jpg">
-            <mat-radio-button value="1" [checked]=true></mat-radio-button>
-          </div>
-          <div class="necklace-pic">
-            <img src="assets/necklace-collection/2.jpg">
-            <mat-radio-button value="2"></mat-radio-button>
-          </div>
-          <div class="necklace-pic">
-            <img src="assets/necklace-collection/3.jpg">
-            <mat-radio-button value="3"></mat-radio-button>
-          </div>
-        </mat-radio-group>
-      </mat-step>
-      <mat-step label="Snap photo">
-        <div *ngIf="record">
-          <div id="instructions">
-            <p>* We <b style="color:red;">DO NOT</b>  store the video stream from your camera. It is solely used for clicking a picture.</p>
-            <p>* We <b style="color:red;">DO NOT</b> store the captured picture.</p>
-            <h3>* For <b style="color:blue;">BEST</b> results, look straight at the camera with your <b style="color:blue;">NECK VISIBLE</b> and <b style="color:blue;">WELL LIT</b> sorroundings. And make sure to smile. :)</h3>
-          </div>
-          <video #video id="video" width="videoWidth" height="videoHeight" autoplay muted playsinline [style.margin-left.px]="innerWidth"></video>
+    <div *ngIf="bigScreen; else smallScreen">
+      <mat-vertical-stepper (selectionChange)="stepperChange($event)" linear=true  #stepper >
+        <mat-step label="Select Necklace">
+          <ng-container *ngTemplateOutlet="stepOne"></ng-container>
+        </mat-step>
+        <mat-step label="Snap photo">
+          <ng-container *ngTemplateOutlet="stepTwo"></ng-container>
           <button id="capture-btn" mat-raised-button (click)="capture()" matStepperNext>Capture</button>
-        </div>
-      </mat-step>
-      <mat-step label="Results!">
-        <div class="progressBar" *ngIf="loading"><mat-progress-bar mode="indeterminate"></mat-progress-bar></div>
-        <div id="results"  *ngIf="downloadPic">
-          <div id="result-canvas">
-            <canvas #canvas width="480" height="640"></canvas>
-            <button mat-raised-button (click)="download()">Download</button>
-          </div>
-        </div>
-      </mat-step>
-    </mat-vertical-stepper>
+        </mat-step>
+        <mat-step label="Results!">
+          <ng-container *ngTemplateOutlet="stepThree"></ng-container>
+        </mat-step>
+      </mat-vertical-stepper>
+    </div>
+    <ng-template #smallScreen>
+      <mat-horizontal-stepper (selectionChange)="stepperChange($event)" linear=true labelPosition="bottom" #stepper >
+        <mat-step label="Select Necklace">
+          <ng-container *ngTemplateOutlet="stepOne"></ng-container>
+        </mat-step>
+        <mat-step label="Snap photo">
+          <ng-container *ngTemplateOutlet="stepTwo"></ng-container>
+          <button id="capture-btn" mat-raised-button (click)="capture()" matStepperNext>Capture</button>
+        </mat-step>
+        <mat-step label="Results!">
+          <ng-container *ngTemplateOutlet="stepThree"></ng-container>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </ng-template>
   </mat-accordion>
   <div id="final-msg">
     <div id="user-text">
       <h2>Interested in learning more?</h2>
-      <h2>Leave your email and any comments or feedback.</h2>
-      <h2>Stay tuned!</h2>
+      <h2>Leave your email and stay tuned!</h2>
     </div>
     <user-details (formSubmit)="onSignUp($event)"></user-details>
   </div>
 </div>
 <mat-toolbar id="privacy-policy">
-  <a href="https://app.termly.io/document/privacy-policy/67f50e31-f977-48f9-bc9c-cb93c19eb75f" target="_blank">Privacy Policy</a>
+  <a href="https://app.termly.io/document/privacy-policy/7f8bddd5-de63-4aac-aed9-36a9d9b069da" target="_blank">Privacy Policy</a>
   <p>Copyright &copy; 2019, Nafaria</p>
 </mat-toolbar>

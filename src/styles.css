@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+html, body {
+  overflow-x: hidden;
+}
+body {
+  position: relative
+}
+
 body{margin:0}
 
 .mat-step-header .mat-step-icon {
