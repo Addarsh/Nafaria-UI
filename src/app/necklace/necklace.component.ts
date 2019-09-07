@@ -6,11 +6,16 @@ import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { MatRadioChange } from '@angular/material/radio';
 import { UserDetails } from '../email/email.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Gtag } from 'angular-gtag';
 
 const ERR_STR = "Sorry! Couldn't fit the necklace. Things you can try: " +
 "1. Improve lighting conditions "+
 "2. Make the neck more visible " +
 "3. Try to be in the middle of the picture.";
+
+// Event Category used for Google Analytics.
+const CLICK_CATEGORY = "Click";
+const ENGAGEMENT_CATEGORY = "engagement"
 
 const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
   const byteCharacters = atob(b64Data);
@@ -68,6 +73,7 @@ export class NecklaceComponent implements OnInit {
   constructor(private changeDetectorRef: ChangeDetectorRef,
     private http: HttpClient, public dialog: MatDialog,
     private _snackBar: MatSnackBar,
+    private gtag: Gtag,
   ) {
     this.record = false;
     this.loading = false;
@@ -110,7 +116,21 @@ export class NecklaceComponent implements OnInit {
         this.record = true;
         this.changeDetectorRef.detectChanges();
         this.video.nativeElement.srcObject = stream;
+        this.gtag.event('record_video', {
+          event_category: CLICK_CATEGORY,
+          event_label: 'User consented to record',
+        });
       }).catch((err) => {this.showError("Error in access to camera: " + err.toString());});
+    }else if(!navigator.mediaDevices) {
+      this.gtag.event('reject_video', {
+        event_category: CLICK_CATEGORY,
+        event_label: 'Media Device does not exist',
+      });
+    }else {
+      this.gtag.event('reject_video', {
+        event_category: CLICK_CATEGORY,
+        event_label: 'User rejected permission to record',
+      });
     }
   }
 
@@ -129,6 +149,11 @@ export class NecklaceComponent implements OnInit {
   }
 
   capture() {
+    this.gtag.event('snap_photo', {
+      event_category: CLICK_CATEGORY,
+      event_label: 'Captured user picture',
+    });
+
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = 480;
     tempCanvas.height = 640;
@@ -154,6 +179,7 @@ export class NecklaceComponent implements OnInit {
             this.showError(ERR_STR);
             return
           }
+
           this.downloadPic = true;
           const checkCanvas = setInterval(()=> {
             var ctx = this.canvas.nativeElement.getContext("2d");
@@ -168,11 +194,19 @@ export class NecklaceComponent implements OnInit {
           }, 100);
         }, err => {
           this.loading = false;
-          this.showError(ERR_STR);
+          this.showError("Sorry! Our server encountered an error during processing. Please try again.");
+          this.gtag.event('detection_error', {
+            event_category: ENGAGEMENT_CATEGORY,
+            event_label: 'Server error during image processing',
+          });
       });
     }, err => {
       this.loading = false;
-      this.showError(ERR_STR)
+      this.showError("Request to our server did not go through. Check your internet connection and try again.");
+      this.gtag.event('csrf_token_error', {
+        event_category: ENGAGEMENT_CATEGORY,
+        event_label: 'GET request failed for CSRF token',
+      });
     });
   }
 
@@ -201,6 +235,10 @@ export class NecklaceComponent implements OnInit {
 
   selectionChange(event: MatRadioChange) {
     this.selectedNecklace = event.value;
+    this.gtag.event('necklace_selection_change', {
+      event_category: CLICK_CATEGORY,
+      event_label: this.selectedNecklace,
+    });
   }
 
   onSignUp(event: UserDetails) {
@@ -219,6 +257,13 @@ export class NecklaceComponent implements OnInit {
         }, err => {
           this.showError(err.error);
         });
+    });
+  }
+
+  optionsClicked(nav: string) {
+    this.gtag.event('page_navigation_clicked', {
+      event_category: CLICK_CATEGORY,
+      event_label: nav,
     });
   }
 }

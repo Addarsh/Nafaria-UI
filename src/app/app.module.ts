@@ -22,6 +22,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { GtagModule } from 'angular-gtag';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatRadioModule,
     MatInputModule,
     MatSnackBarModule,
+    GtagModule.forRoot({ trackingId: 'UA-147371517-1', trackPageviews: true }),
   ],
   providers: [],
   bootstrap: [AppComponent],
