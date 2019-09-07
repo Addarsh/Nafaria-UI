@@ -179,7 +179,8 @@ export class NecklaceComponent implements OnInit {
   download() {
     const link = document.createElement('a');
     link.download = "virtual_necklace.png";
-    link.href = this.canvas.nativeElement.toDataURL('image/png').replace("image/png", "image/octet-stream");
+    link.target = '_blank';
+    link.href = this.canvas.nativeElement.toDataURL('image/png');
     link.click();
   }
 
