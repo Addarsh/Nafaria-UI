@@ -86,7 +86,7 @@ export class NecklaceComponent implements OnInit {
     } else {
       this.videoWidth = 640;
       this.videoHeight = 640;
-      this.innerWidth = window.innerWidth-530;
+      this.innerWidth = -145;
     }
   }
 
