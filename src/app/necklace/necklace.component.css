@@ -75,6 +75,10 @@
   user-details{
     align-self: stretch;
   }
+
+  #mission-cntr div {
+    width: 90%;
+  }
 }
 
 /* For big screen */
@@ -112,6 +116,10 @@
   #capture-btn {
     width: 100%;
   }
+
+  #mission-cntr div {
+    width: 70%;
+  }
 }
 
 mat-grid-tile{
@@ -132,6 +140,19 @@ mat-grid-tile div {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+}
+
+#mission-cntr {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+#mission-cntr div {
+  font-weight: bold;
+  font-size: 24px;
+  font-family: cursive;
 }
 
 .pane {
