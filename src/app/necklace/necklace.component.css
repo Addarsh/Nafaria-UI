@@ -56,6 +56,12 @@
     width: 100vw;
   }
 
+  #takePic {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
   #final-msg {
     width: 90vw;
     margin-left: 5vw;
@@ -68,22 +74,6 @@
 
   user-details{
     align-self: stretch;
-  }
-
-  #video {
-    background-color: #000000;
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 100;
-  }
-
-  #capture-btn {
-    width: 100%;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 102;
   }
 }
 
@@ -178,7 +168,7 @@ mat-radio-button {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  margin-bottom: 2vw;
+  margin-bottom: 20px;
 }
 
 #instructions p {

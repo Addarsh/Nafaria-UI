@@ -41,13 +41,13 @@
     </mat-radio-group>
   </ng-template>
   <ng-template #stepTwo>
+    <div id="instructions">
+      <p>* We <b style="color:red;">DO NOT</b>  store the video stream from your camera. It is solely used for clicking a picture.</p>
+      <p>* We <b style="color:red;">DO NOT</b> store the captured picture.</p>
+      <p>* For <b style="color:blue;">BEST</b> results, look straight at the camera(don't be too close or too far from the camera) with your <b style="color:blue;">NECK VISIBLE</b> and <b style="color:blue;">WELL LIT</b> sorroundings. Smile!</p>
+    </div>
     <div *ngIf="record">
       <video #video id="video" width="videoWidth" height="videoHeight" autoplay muted playsinline [style.margin-left.px]="innerWidth"></video>
-      <div id="instructions">
-        <p>* We <b style="color:red;">DO NOT</b>  store the video stream from your camera. It is solely used for clicking a picture.</p>
-        <p>* We <b style="color:red;">DO NOT</b> store the captured picture.</p>
-        <p>* For <b style="color:blue;">BEST</b> results, look straight at the camera(don't be too close or too far from the camera) with your <b style="color:blue;">NECK VISIBLE</b> and <b style="color:blue;">WELL LIT</b> sorroundings. Smile!</p>
-      </div>
     </div>
   </ng-template>
   <ng-template #stepThree>
@@ -71,8 +71,8 @@
           <ng-container *ngTemplateOutlet="stepOne"></ng-container>
         </mat-step>
         <mat-step label="Snap photo">
-          <button id="capture-btn" mat-raised-button (click)="capture()" matStepperNext>Capture</button>
           <ng-container *ngTemplateOutlet="stepTwo"></ng-container>
+          <button id="capture-btn" mat-raised-button (click)="capture()" matStepperNext>Capture</button>
         </mat-step>
         <mat-step label="Results!">
           <ng-container *ngTemplateOutlet="stepThree"></ng-container>
@@ -86,8 +86,11 @@
           <div><button mat-button matStepperNext>Next</button></div>
         </mat-step>
         <mat-step label="Snap photo">
-          <button id="capture-btn" mat-raised-button (click)="capture()" matStepperNext>Capture</button>
           <ng-container *ngTemplateOutlet="stepTwo"></ng-container>
+          <div id="takePic">
+            <button type="button" mat-raised-button (click)="fileInput.click()" matStepperNext>Take a picture!</button>
+          </div>
+          <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file" accept="image/*" capture="user">
         </mat-step>
         <mat-step label="Results!">
           <ng-container *ngTemplateOutlet="stepThree"></ng-container>

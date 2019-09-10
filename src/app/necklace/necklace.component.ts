@@ -99,33 +99,35 @@ export class NecklaceComponent implements OnInit {
 
   enableDemo() {
     this.downloadPic = false;
-    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: "user",
-          width: { ideal: this.videoWidth },
-          height: { ideal: this.videoHeight },
-        },
-      }).then(stream => {
-        this.record = true;
-        this.changeDetectorRef.detectChanges();
-        this.video.nativeElement.srcObject = stream;
-        this.gtag.event('record_video', {
-          event_category: ENGAGEMENT_CATEGORY,
-          event_label: 'User consented to record',
+    if(this.bigScreen) {
+      if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "user",
+            width: { ideal: this.videoWidth },
+            height: { ideal: this.videoHeight },
+          },
+        }).then(stream => {
+          this.record = true;
+          this.changeDetectorRef.detectChanges();
+          this.video.nativeElement.srcObject = stream;
+          this.gtag.event('record_video', {
+            event_category: ENGAGEMENT_CATEGORY,
+            event_label: 'User consented to record',
+          });
+        }).catch((err) => {
+          this.showError("Error in access to camera: " + err.toString());
+          this.gtag.event('reject_video', {
+            event_category: ENGAGEMENT_CATEGORY,
+            event_label: 'User rejected permission to record',
+          });
         });
-      }).catch((err) => {
-        this.showError("Error in access to camera: " + err.toString());
+      }else if(!navigator.mediaDevices) {
         this.gtag.event('reject_video', {
           event_category: ENGAGEMENT_CATEGORY,
-          event_label: 'User rejected permission to record',
+          event_label: 'Media Device does not exist',
         });
-      });
-    }else if(!navigator.mediaDevices) {
-      this.gtag.event('reject_video', {
-        event_category: ENGAGEMENT_CATEGORY,
-        event_label: 'Media Device does not exist',
-      });
+      }
     }
   }
 
@@ -144,17 +146,23 @@ export class NecklaceComponent implements OnInit {
   }
 
   capture() {
-    this.gtag.event('snap_photo', {
-      event_category: ENGAGEMENT_CATEGORY,
-      event_label: 'Captured user picture',
-    });
-
     const tempCanvas = document.createElement('canvas');
     tempCanvas.width = 480;
     tempCanvas.height = 640;
     tempCanvas.getContext("2d").drawImage(this.video.nativeElement, (this.videoWidth-480)/2, 0, 480, 640, 0, 0, 480, 640);
     this.disableDemo();
+
+    this.uploadImage(tempCanvas.toDataURL("image/png"));
+  }
+
+  uploadImage(base64Image) {
     this.loading = true;
+
+    this.gtag.event('snap_photo', {
+      event_category: ENGAGEMENT_CATEGORY,
+      event_label: 'Captured user picture',
+    });
+
 
     this.http.get(this.imageURL, {responseType: 'text'}).subscribe(resp => {
       const HTTP_OPTIONS = {
@@ -167,7 +175,7 @@ export class NecklaceComponent implements OnInit {
       const startTime = Date.now();
       this.http.post(this.imageURL, {
         "necklace": this.selectedNecklace,
-        "data": tempCanvas.toDataURL("image/png"),
+        "data": base64Image,
       }, HTTP_OPTIONS)
         .subscribe(resp => {
           this.loading = false;
@@ -302,5 +310,31 @@ export class NecklaceComponent implements OnInit {
       event_category: ENGAGEMENT_CATEGORY,
       event_label: nav,
     });
+  }
+
+  onFileSelected(event) {
+    let file = null;
+    let fileList = event.target.files;
+
+    for (let i = 0; i < fileList.length; i++) {
+      if (fileList[i].type.match(/^image\//)) {
+        file = fileList[i];
+        break;
+      }
+    }
+
+    if (file !== null) {
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      var self = this;
+      reader.onload = function () {
+        self.uploadImage(reader.result);
+      };
+      reader.onerror = function (error) {
+        self.showError("Image is corrupt; Please try again.");
+      };
+    } else {
+      this.showError("Invalid image format; Please try again.");
+    }
   }
 }
